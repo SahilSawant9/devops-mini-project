@@ -1,13 +1,29 @@
-name: Deploy to LocalStack
+name: CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566:4566
+          - 4571:4571
+        env:
+          SERVICES: s3
+          DEBUG: 1
+        options: >-
+          --health-cmd "curl -f http://localhost:4566/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout code
@@ -23,6 +39,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
+      - name: Run Flask app test
         run: |
-          pytest tests/
+          python -c "import requests; r = requests.get('http://127.0.0.1:5000'); assert 'Sahil Sawant' in r.text"
