@@ -1,5 +1,6 @@
 import app
 
-
 def test_home():
-    assert app.app.test_client().get('/').data == b'Majhe Naav Sahil Sawant'
+    response = app.app.test_client().get('/')
+    assert response.status_code == 200
+    assert response.data == b'Majhe Naav Sahil Sawant'
