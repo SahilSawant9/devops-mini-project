@@ -1,23 +1,23 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  localstack:
-    image: localstack/localstack:latest
-    ports:
-      - "4566:4566"
-      - "4571:4571"
-    environment:
-      - SERVICES=s3,apigateway,lambda
-      - DEBUG=1
-    volumes:
-      - "./localstack:/var/lib/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-
   flask-app:
     build: .
     ports:
       - "5000:5000"
     volumes:
       - .:/app
-    depends_on:
-      - localstack
+    environment:
+      - FLASK_ENV=development
+
+#  localstack:
+#    image: localstack/localstack
+#    ports:
+#      - "4566:4566"
+#      - "4571:4571"
+#    environment:
+#      - SERVICES=s3,lambda
+#      - DEBUG=1
+#    volumes:
+#      - "./.localstack:/tmp/localstack"
+#      - "/var/run/docker.sock:/var/run/docker.sock"
