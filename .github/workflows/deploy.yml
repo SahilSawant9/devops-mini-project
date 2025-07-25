@@ -24,10 +24,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🐳 Set up Docker Compose
+      - name: 🐳 Build Docker image (Flask App)
         run: |
-          docker-compose up -d localstack
-          sleep 30  # Give LocalStack time to fully start
+          docker build -t flask-app .
 
       - name: ✅ Run tests
         run: |

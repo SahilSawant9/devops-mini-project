@@ -1,14 +1,22 @@
 version: "3.8"
 
 services:
-  localstack:
-    image: localstack/localstack:latest
-    container_name: localstack
+  flask-app:
+    build: .
     ports:
-      - "4566:4566" # Edge port to interact with AWS services
-    environment:
-      - SERVICES=apigateway,s3,lambda # Add more services if needed
-      - DEBUG=1
+      - "5000:5000"
     volumes:
-      - "./localstack:/var/lib/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+#  localstack:
+#    image: localstack/localstack
+#    ports:
+#      - "4566:4566"
+#      - "4571:4571"
+#    environment:
+#      - SERVICES=s3,lambda
+#      - DEBUG=1
+#    volumes:
+#      - "./.localstack:/tmp/localstack"
+#      - "/var/run/docker.sock:/var/run/docker.sock"
