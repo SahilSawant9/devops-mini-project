@@ -24,10 +24,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🐳 Build Docker image
-        run: |
-          docker build -t flask-app .
-
-      - name: ✅ Run test
+      - name: ✅ Run tests
         run: |
           pytest
