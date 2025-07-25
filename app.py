@@ -8,6 +8,5 @@ def home():
     return "Majhe Naav Sahil Sawant"
 
 
-# Only run the server if executed directly
 if __name__ == '__main__':
     app.run()
